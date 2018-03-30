@@ -6,17 +6,24 @@ from keras.engine import Layer
 
 
 class Match(Layer):
-    """Layer that computes a matching matrix between samples in two tensors.
-    # Arguments
-        normalize: Whether to L2-normalize samples along the
-            dot product axis before taking the dot product.
-            If set to True, then the output of the dot product
-            is the cosine proximity between the two samples.
-        **kwargs: Standard layer keyword arguments.
+    """
+    Layer that computes a matching matrix between samples in two tensors.
     """
 
     def __init__(self, normalize=False, match_type='dot', embedding_size=None,
                  r=None, **kwargs):
+        """
+
+        Args:
+            normalize: Whether to L2-normalize samples along the
+            dot product axis before taking the dot product.
+            If set to True, then the output of the dot product
+            is the cosine proximity between the two samples.
+            match_type:
+            embedding_size:
+            r:
+            **kwargs:
+        """
         super(Match, self).__init__(**kwargs)
         self.normalize = normalize
         self.match_type = match_type

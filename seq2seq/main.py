@@ -11,9 +11,9 @@ import sys
 import time
 
 random.seed(49999)
-import numpy
+import numpy as np
 
-numpy.random.seed(49999)
+np.random.seed(49999)
 import tensorflow
 
 tensorflow.set_random_seed(49999)
@@ -21,7 +21,6 @@ tensorflow.set_random_seed(49999)
 from collections import OrderedDict
 
 import keras
-import keras.backend as K
 from keras.models import Model
 
 from utils import *
