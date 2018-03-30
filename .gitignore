@@ -15,6 +15,10 @@ seq2seq/querydecision/
 .idea/
 examples/wikiqa/weights
 .vscode/
-data/
-log/
-toy_example/weights/1522382089.3818443/.config
+data/WikiQA/*.zip
+data/WikiQA/*.txt
+!data/WikiQA/*.py
+!data/WikiQA/*.sh
+embed.idf
+examples/toy_example/weights/*
+
