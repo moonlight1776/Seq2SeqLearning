@@ -11,10 +11,10 @@ from model import BasicModel
 from utils.utility import *
 
 
-class ARCII(BasicModel):
+class GatedARCII(BasicModel):
     def __init__(self, config):
-        super(ARCII, self).__init__(config)
-        self.__name = 'ARCII'
+        super(GatedARCII, self).__init__(config)
+        self.__name = 'GatedARCII'
         self.check_list = ['text1_maxlen', 'text2_maxlen',
                            'embed', 'embed_size', 'vocab_size',
                            '1d_kernel_size', '1d_kernel_count',
@@ -24,8 +24,8 @@ class ARCII(BasicModel):
         self.embed_trainable = config['train_embed']
         self.setup(config)
         if not self.check():
-            raise TypeError('[ARCII] parameter check wrong')
-        print('[ARCII] init done', end='\n')
+            raise TypeError('[GatedARCII] parameter check wrong')
+        print('[GatedARCII] init done', end='\n')
 
     def setup(self, config):
         if not isinstance(config, dict):
