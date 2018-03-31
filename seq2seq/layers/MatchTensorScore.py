@@ -52,7 +52,7 @@ class MatchTensorScore(Layer):
         # 
         part1 = K.tf.concat(
             [K.tf.reduce_sum(K.dot(x1, self.M[:, :, i]) * x2, axis=-1,
-                             keepdims=True)
+                             keep_dims=True)
              for i in range(self.r)],
             axis=-1)
         print(K.tf.shape(part1))

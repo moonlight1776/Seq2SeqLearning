@@ -6,6 +6,7 @@ from keras.layers import *
 from keras.layers import Reshape, Embedding
 from keras.models import Sequential, Model
 
+from layers.Gated import *
 from layers.Match import *
 from model import BasicModel
 from utils.utility import *
@@ -14,7 +15,7 @@ from utils.utility import *
 class GatedARCII(BasicModel):
     def __init__(self, config):
         super(GatedARCII, self).__init__(config)
-        self.__name = 'GatedARCII'
+        self.__name = 'ARCII'
         self.check_list = ['text1_maxlen', 'text2_maxlen',
                            'embed', 'embed_size', 'vocab_size',
                            '1d_kernel_size', '1d_kernel_count',
@@ -24,8 +25,8 @@ class GatedARCII(BasicModel):
         self.embed_trainable = config['train_embed']
         self.setup(config)
         if not self.check():
-            raise TypeError('[GatedARCII] parameter check wrong')
-        print('[GatedARCII] init done', end='\n')
+            raise TypeError('[ARCII] parameter check wrong')
+        print('[ARCII] init done', end='\n')
 
     def setup(self, config):
         if not isinstance(config, dict):
@@ -67,14 +68,28 @@ class GatedARCII(BasicModel):
         d_embed = embedding(doc)
         show_layer_info('Embedding', d_embed)
 
-        q_conv1 = Conv1D(self.config['1d_kernel_count'],
-                         self.config['1d_kernel_size'], padding='same')(
+        q_conv1_1 = Conv1D(self.config['1d_kernel_count'],
+                           self.config['1d_kernel_size'], padding='same')(
             q_embed)
-        show_layer_info('Conv1D', q_conv1)
-        d_conv1 = Conv1D(self.config['1d_kernel_count'],
+        show_layer_info('Conv1D', q_conv1_1)
+
+        q_conv1_2 = Conv1D(self.config['1d_kernel_count'],
+                           self.config['1d_kernel_size'], padding='same')(
+            q_embed)
+        show_layer_info('Conv1D', q_conv1_2)
+
+        d_conv1_1 = Conv1D(self.config['1d_kernel_count'],
                          self.config['1d_kernel_size'], padding='same')(
             d_embed)
-        show_layer_info('Conv1D', d_conv1)
+        show_layer_info('Conv1D', d_conv1_1)
+
+        d_conv1_2 = Conv1D(self.config['1d_kernel_count'],
+                           self.config['1d_kernel_size'], padding='same')(
+            d_embed)
+        show_layer_info('Conv1D', d_conv1_2)
+
+        q_conv1 = Gated()([q_conv1_1, q_conv1_2])
+        d_conv1 = Gated()([d_conv1_1, d_conv1_2])
 
         cross = Match(match_type='plus')([q_conv1, d_conv1])
         show_layer_info('Match-plus', cross)

@@ -12,6 +12,7 @@ from layers.MatchTensorScore import *
 from model import BasicModel
 from utils.utility import *
 
+import math
 
 class CNTN(BasicModel):
     def __init__(self, config):
